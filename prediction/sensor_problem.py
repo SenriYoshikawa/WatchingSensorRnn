@@ -5,10 +5,10 @@ import RNN
 
 
 def _main():
-    prob_filename = 'sin-cos-prob.npy'
+    prob_filename = '25-006-2012-02.npy'
 
     # パラメータ
-    maxlen = 25
+    maxlen = 1440
     n_hidden = 20
     epochs = 500
     batch_size = 10
@@ -35,17 +35,17 @@ def _main():
              batch_size=batch_size, epochs=epochs)
 
     # 予測用データを準備
-    answer_list = np.load('sin-cos-ans.npy')
+    answer_list = np.load('25-006-2012-03.npy')
     precedence = np.array([answer_list[0:maxlen]])
     predicted = [[None, None] for i in range(maxlen)]
 
     # 予測
     model.predict(precedence, predicted, length_of_sequences)
 
-    # 予測結果を描画
-    model.draw_epochs()
-
     # loss推移を描画
+    model.draw_each_day_prediction(answer_list, predicted)
+
+    # 予測結果を描画
     model.draw_prediction(answer_list, predicted)
 
 

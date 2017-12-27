@@ -194,6 +194,33 @@ class RNN(object):
         plt.savefig("sin test.png")
         print("save to sin test.png")
 
+    def draw_each_day_prediction(self, original, predicted):
+        num_day = len(original) // 1440
+        for i in range(num_day):
+            plt.cla()
+            plt.figure()
+            plt.title(self._data_name + str(i))
+
+            plt.subplot(4, 1, 1)
+            plt.bar(original[:, 0][i*1440:(i+1)*1440])
+            plt.title('Actual data living')
+
+            plt.subplot(4, 1, 2)
+            plt.bar(predicted[:, 0][i*1440:(i+1)*1440])
+            plt.title('Predict data living')
+
+            plt.subplot(4, 1, 3)
+            plt.bar(original[:, 1][i*1440:(i+1)*1440])
+            plt.title('Actual data entrance')
+
+            plt.subplot(4, 1, 4)
+            plt.bar(predicted[:, 1][i*1440:(i+1)*1440])
+            plt.title('Predict data entrance')
+
+            filename = self._data_name + str(i) + 'png'
+            plt.savefig('plot/' + filename)
+            print(filename + 'saved')
+
     '''
     def evaluate(self, x_test, y_test):
         return self.accuracy.eval(session=self._sess, feed_dict={
